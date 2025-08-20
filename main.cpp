@@ -103,6 +103,8 @@ int main()
         float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
 		ourShader.setVec4f("ourColor", 0.0f, greenValue, 0.0f, 1.0f);
 
+		ourShader.setVec4f("offset", 0.5f,0,0,0);
+
         // Call after defining the vertexs to calculate the shader.
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glBindVertexArray(VAO);
