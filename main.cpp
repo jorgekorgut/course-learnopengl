@@ -3,6 +3,9 @@
 #include <iostream>
 #include "Shader.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
@@ -42,12 +45,12 @@ int main()
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     // Primitives declaration
-
     float vertices[] = {
-        // positions         // colors
-         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
-        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
-         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
+        // positions          // colors           // texture coords
+         0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+         0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
     };
     
     unsigned int indices[] = {  // note that we start from 0!
@@ -76,19 +79,80 @@ int main()
         3, //vec3 3 values
         GL_FLOAT,
         GL_FALSE,
-        6 * sizeof(float), // Stride
+        8 * sizeof(float), // Stride
         (void*)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, //layout(0) in the vertex shader
+    glVertexAttribPointer(1, //layout(1) in the vertex shader
         3, //vec3 3 values
         GL_FLOAT,
         GL_FALSE,
-        6 * sizeof(float), // Stride
+        8 * sizeof(float), // Stride
         (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
+    glVertexAttribPointer(2, //layout(2) in the vertex shader
+        2, //vec2 2 values
+        GL_FLOAT,
+        GL_FALSE,
+        8 * sizeof(float), // Stride
+        (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
+    // Texture Loading
+    unsigned int texture1;
+    glGenTextures(1, &texture1);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    stbi_set_flip_vertically_on_load(true);
+
+    int width, height, nrChannels;
+    unsigned char* data = stbi_load("container.jpg", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+
+    unsigned int texture2;
+    glGenTextures(1, &texture2);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    unsigned char* data2 = stbi_load("awesomeface.png", &width, &height, &nrChannels, 0);
+    if (data2)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data2);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+
+    stbi_image_free(data);
+    stbi_image_free(data2);
+
     Shader ourShader("shader.vs", "shader.fs");
+    
+    ourShader.use();
+    ourShader.setInt("texture1", 0); // or with shader class
+    ourShader.setInt("texture2", 1); // or with shader class
 
     // Render loop
     while (!glfwWindowShouldClose(window))
@@ -98,16 +162,15 @@ int main()
 
         ourShader.use();
 
-		// Set the color to be used in the fragment shader
-        float timeValue = (float)glfwGetTime();
-        float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-		ourShader.setVec4f("ourColor", 0.0f, greenValue, 0.0f, 1.0f);
-
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture1);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture2);
         // Call after defining the vertexs to calculate the shader.
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glBindVertexArray(VAO);
-        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glDrawArrays(GL_TRIANGLES, 0, 3); // Draw the triangle using the vertices
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        
         glBindVertexArray(0);
 
         processInput(window);
