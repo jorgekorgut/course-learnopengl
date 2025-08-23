@@ -43,5 +43,11 @@
     <None Include="shader.fs">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="light_cube.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="light_cube.fs">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
