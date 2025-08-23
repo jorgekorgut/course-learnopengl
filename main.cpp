@@ -242,6 +242,8 @@ int main()
 
     unsigned int specularMap = loadTexture("container2_specular.png");
 
+    unsigned int emissionMap = loadTexture("matrix.jpg");
+
     Shader ourShader("shader.vs", "shader.fs");
     Shader lightCubeShader("light_cube.vs", "light_cube.fs");
     
@@ -252,6 +254,7 @@ int main()
 	ourShader.use();
     ourShader.setInt("material.diffuse", 0);
     ourShader.setInt("material.specular", 1);
+    ourShader.setInt("material.emission", 2);
     ourShader.setFloat("material.shininess", 32.0f);
 
     ourShader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
@@ -296,6 +299,9 @@ int main()
 
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, specularMap);
+
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, emissionMap);
 
         glBindVertexArray(cubeVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
