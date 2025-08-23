@@ -223,36 +223,32 @@ int main()
 
         ourShader.use();
 
-        glm::vec3 lightColor;
-        lightColor.x = (float)sin(glfwGetTime() * 2.0f);
-        lightColor.y = (float)sin(glfwGetTime() * 0.7f);
-        lightColor.z = (float)sin(glfwGetTime() * 1.3f);
-        glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
-        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
-        ourShader.setVec3("light.ambient", ambientColor);
-        ourShader.setVec3("light.diffuse", diffuseColor);
-        ourShader.setVec3("light.position", lightPos);
-
-
         glm::mat4 view = camera.GetViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         ourShader.setMat4("view", view);
         ourShader.setMat4("projection", projection);
 
-        model = glm::mat4(1.0f);
-        ourShader.setMat4("model", model);
-		normalMatrix = glm::transpose(glm::inverse(model)); // Update normal matrix only in case of non-uniform scaling
-		ourShader.setMat3("normalMatrix", normalMatrix);
-
-        ourShader.setVec3("viewPos", camera.Position);
-        
-        glBindVertexArray(cubeVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        for(int i = 0; i < 4; i++)
+        {
+            for(int j = 0; j < 2; j++)
+            {
+                model = glm::mat4(1.0f);
+                model = glm::translate(model, glm::vec3(i - 1.5f, j - 1.5f, 0.0f));
+                model = glm::rotate(model, 1.0f, glm::vec3(1.0f, 0.3f, 0.5f));
+				model = glm::scale(model, glm::vec3(0.5f));
+				ourShader.setMat4("model", model);
+				normalMatrix = glm::transpose(glm::inverse(model)); // Update normal matrix only in case of non-uniform scaling
+                ourShader.setMat3("normalMatrix", normalMatrix);
+                glBindVertexArray(cubeVAO);
+                glDrawArrays(GL_TRIANGLES, 0, 36);
+            }
+		}
 
         lightCubeShader.use();
 		lightCubeShader.setMat4("view", view);
 		lightCubeShader.setMat4("projection", projection);
-		lightCubeShader.setVec3("lightColor", lightColor);
+        glm::vec3 lightColor(1.0f);
+        lightCubeShader.setVec3("lightColor", lightColor);
         
         glBindVertexArray(lightCubeVAO);
        
