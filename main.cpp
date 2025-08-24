@@ -201,6 +201,13 @@ int main()
     glm::vec3(-1.3f,  1.0f, -1.5f)
     };
 
+    glm::vec3 pointLightPositions[] = {
+    glm::vec3(0.7f,  0.2f,  2.0f),
+    glm::vec3(2.3f, -3.3f, -4.0f),
+    glm::vec3(-4.0f,  2.0f, -12.0f),
+    glm::vec3(0.0f,  0.0f, -3.0f)
+    };
+
     // Creates VAO
     unsigned int cubeVAO;
     glGenVertexArrays(1, &cubeVAO);
@@ -255,8 +262,8 @@ int main()
 
     unsigned int specularMap = loadTexture("container2_specular.png");
 
-    Shader ourShader("shader.vs", "shader.fs");
-    Shader lightCubeShader("light_cube.vs", "light_cube.fs");
+    Shader ourShader("shader.vert", "shader.frag");
+    Shader lightCubeShader("light_cube.vert", "light_cube.frag");
     
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 view = glm::mat4(1.0f);
@@ -282,34 +289,56 @@ int main()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        ourShader.use();
-
-        glm::vec3 lightColor(1.0f);
-        glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
-        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
-        ourShader.setVec3("light.ambient", ambientColor);
-        ourShader.setVec3("light.diffuse", diffuseColor);
-
-
-        /*
-        // Point light
-        ourShader.setFloat("light.constant", 1.0f);
-        ourShader.setFloat("light.linear", 0.09f);
-        ourShader.setFloat("light.quadratic", 0.032f);
-        ourShader.setVec3("light.position", lightPos);
-        */
-
-        ourShader.setVec3("light.position", camera.Position);
-        ourShader.setVec3("light.direction", camera.Front);
-        ourShader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
-        ourShader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
-
-
         glm::mat4 view = camera.GetViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+
+        lightCubeShader.use();
+        lightCubeShader.setMat4("view", view);
+        lightCubeShader.setMat4("projection", projection);
+        glm::vec3 lightColor(1.0f);
+        lightCubeShader.setVec3("lightColor", lightColor);
+        glBindVertexArray(lightCubeVAO);
+        for (int i = 0; i < 4; i++)
+        {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, pointLightPositions[i]);
+            model = glm::scale(model, glm::vec3(0.5f)); // a smaller cube
+            lightCubeShader.setMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+
+        ourShader.use();
+        glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
+        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
+        glm::vec3 specularColor = glm::vec3(1.0f);
+        ourShader.setVec3("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+        ourShader.setVec3("dirLight.ambient", ambientColor);
+        ourShader.setVec3("dirLight.diffuse", diffuseColor);
+        ourShader.setVec3("dirLight.specular", specularColor);
+
+        for(int i = 0; i < 4; i++)
+        {
+            std::string number = std::to_string(i);
+            ourShader.setVec3("pointLights[" + number + "].position", pointLightPositions[i]);
+            ourShader.setVec3("pointLights[" + number + "].ambient", 0.05f, 0.05f, 0.05f);
+            ourShader.setVec3("pointLights[" + number + "].diffuse", 0.8f, 0.8f, 0.8f);
+            ourShader.setVec3("pointLights[" + number + "].specular", 1.0f, 1.0f, 1.0f);
+            ourShader.setFloat("pointLights[" + number + "].constant", 1.0f);
+            ourShader.setFloat("pointLights[" + number + "].linear", 0.09f);
+            ourShader.setFloat("pointLights[" + number + "].quadratic", 0.032f);
+		}
+
+        ourShader.setVec3("spotLight.position", camera.Position);
+        ourShader.setVec3("spotLight.direction", camera.Front);
+        ourShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+        ourShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(17.5f)));
+        ourShader.setVec3("spotLight.ambient", ambientColor);
+        ourShader.setVec3("spotLight.diffuse", diffuseColor);
+        ourShader.setVec3("spotLight.specular", specularColor);
+
+        
         ourShader.setMat4("view", view);
         ourShader.setMat4("projection", projection);
-
         ourShader.setVec3("viewPos", camera.Position);
 
         for (unsigned int i = 0; i < 10; i++)
@@ -332,18 +361,6 @@ int main()
             glBindVertexArray(cubeVAO);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-
-		lightCubeShader.use();
-		lightCubeShader.setMat4("view", view);
-		lightCubeShader.setMat4("projection", projection);
-		lightCubeShader.setVec3("lightColor", lightColor);
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, lightPos);
-		model = glm::scale(model, glm::vec3(0.5f)); // a smaller cube
-		lightCubeShader.setMat4("model", model);
-        glBindVertexArray(lightCubeVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-
         
         glBindVertexArray(0);
 
