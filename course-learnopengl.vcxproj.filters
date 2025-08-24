@@ -19,6 +19,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{f9bb1046-df6b-4351-9d4a-fe8f4c3f2d7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\backpack">
+      <UniqueIdentifier>{ea8019a3-204d-4b38-93e9-94788e915120}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="libs\glad.c">
@@ -33,6 +36,15 @@
     <ClCompile Include="src\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libs\stb_image.h">
@@ -42,6 +54,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextureUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -61,6 +82,21 @@
     <Image Include="resources\wall.jpg">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="resources\backpack\ao.jpg">
+      <Filter>Resource Files\backpack</Filter>
+    </Image>
+    <Image Include="resources\backpack\diffuse.jpg">
+      <Filter>Resource Files\backpack</Filter>
+    </Image>
+    <Image Include="resources\backpack\normal.png">
+      <Filter>Resource Files\backpack</Filter>
+    </Image>
+    <Image Include="resources\backpack\roughness.jpg">
+      <Filter>Resource Files\backpack</Filter>
+    </Image>
+    <Image Include="resources\backpack\specular.jpg">
+      <Filter>Resource Files\backpack</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\light_cube.vert">
@@ -75,5 +111,13 @@
     <None Include="shaders\light_cube.frag">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="resources\backpack\backpack.mtl">
+      <Filter>Resource Files\backpack</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resources\backpack\source_attribution.txt">
+      <Filter>Resource Files\backpack</Filter>
+    </Text>
   </ItemGroup>
 </Project>

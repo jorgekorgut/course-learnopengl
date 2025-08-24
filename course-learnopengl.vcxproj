@@ -114,7 +114,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;assimp-vc143-mtd.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,32 +129,47 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;assimp-vc143-mtd.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="libs\glad.c" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Mesh.cpp" />
+    <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\TextureUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libs\stb_image.h" />
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Mesh.h" />
+    <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\TextureUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\awesomeface.png" />
+    <Image Include="resources\backpack\ao.jpg" />
+    <Image Include="resources\backpack\diffuse.jpg" />
+    <Image Include="resources\backpack\normal.png" />
+    <Image Include="resources\backpack\roughness.jpg" />
+    <Image Include="resources\backpack\specular.jpg" />
     <Image Include="resources\container.jpg" />
     <Image Include="resources\container2.png" />
     <Image Include="resources\container2_specular.png" />
     <Image Include="resources\wall.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\backpack\backpack.mtl" />
     <None Include="shaders\light_cube.frag" />
     <None Include="shaders\light_cube.vert" />
     <None Include="shaders\shader.frag" />
     <None Include="shaders\shader.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resources\backpack\source_attribution.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
