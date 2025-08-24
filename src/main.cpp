@@ -258,12 +258,12 @@ int main()
         (void*)0);
     glEnableVertexAttribArray(0);
 
-    unsigned int diffuseMap = loadTexture("container2.png");
+    unsigned int diffuseMap = loadTexture("resources/container2.png");
 
-    unsigned int specularMap = loadTexture("container2_specular.png");
+    unsigned int specularMap = loadTexture("resources/container2_specular.png");
 
-    Shader ourShader("shader.vert", "shader.frag");
-    Shader lightCubeShader("light_cube.vert", "light_cube.frag");
+    Shader ourShader("shaders/shader.vert", "shaders/shader.frag");
+    Shader lightCubeShader("shaders/light_cube.vert", "shaders/light_cube.frag");
     
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 view = glm::mat4(1.0f);

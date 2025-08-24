@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\steh4\Desktop\loisir\opengl\includes;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\steh4\Desktop\loisir\opengl\includes;$(ProjectDir)libs;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\steh4\Desktop\loisir\opengl\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\steh4\Desktop\loisir\opengl\includes;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\steh4\Desktop\loisir\opengl\includes;$(ProjectDir)libs;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\steh4\Desktop\loisir\opengl\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -133,20 +133,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\glad\src\glad.c" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="libs\glad.c" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Shader.h" />
+    <ClInclude Include="libs\stb_image.h" />
+    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Shader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="light_cube.frag" />
-    <None Include="light_cube.vert" />
-    <None Include="shader.frag" />
-    <None Include="shader.vert" />
+    <Image Include="resources\awesomeface.png" />
+    <Image Include="resources\container.jpg" />
+    <Image Include="resources\container2.png" />
+    <Image Include="resources\container2_specular.png" />
+    <Image Include="resources\wall.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\light_cube.frag" />
+    <None Include="shaders\light_cube.vert" />
+    <None Include="shaders\shader.frag" />
+    <None Include="shaders\shader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
