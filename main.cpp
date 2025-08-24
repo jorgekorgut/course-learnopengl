@@ -286,7 +286,7 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(1.0f, 1.0f,1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glm::mat4 view = camera.GetViewMatrix();
@@ -295,7 +295,7 @@ int main()
         lightCubeShader.use();
         lightCubeShader.setMat4("view", view);
         lightCubeShader.setMat4("projection", projection);
-        glm::vec3 lightColor(1.0f);
+        glm::vec3 lightColor(0.0f, 1.0f, 0.0f);
         lightCubeShader.setVec3("lightColor", lightColor);
         glBindVertexArray(lightCubeVAO);
         for (int i = 0; i < 4; i++)
@@ -308,8 +308,8 @@ int main()
         }
 
         ourShader.use();
-        glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
-        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
+        glm::vec3 diffuseColor = glm::vec3(1.0f);
+        glm::vec3 ambientColor = glm::vec3(0.5f);
         glm::vec3 specularColor = glm::vec3(1.0f);
         ourShader.setVec3("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
         ourShader.setVec3("dirLight.ambient", ambientColor);
@@ -320,12 +320,12 @@ int main()
         {
             std::string number = std::to_string(i);
             ourShader.setVec3("pointLights[" + number + "].position", pointLightPositions[i]);
-            ourShader.setVec3("pointLights[" + number + "].ambient", 0.05f, 0.05f, 0.05f);
-            ourShader.setVec3("pointLights[" + number + "].diffuse", 0.8f, 0.8f, 0.8f);
-            ourShader.setVec3("pointLights[" + number + "].specular", 1.0f, 1.0f, 1.0f);
+            ourShader.setVec3("pointLights[" + number + "].ambient", lightColor * 0.01f);
+            ourShader.setVec3("pointLights[" + number + "].diffuse", lightColor);
+            ourShader.setVec3("pointLights[" + number + "].specular", lightColor);
             ourShader.setFloat("pointLights[" + number + "].constant", 1.0f);
-            ourShader.setFloat("pointLights[" + number + "].linear", 0.09f);
-            ourShader.setFloat("pointLights[" + number + "].quadratic", 0.032f);
+            ourShader.setFloat("pointLights[" + number + "].linear", 0.07f);
+            ourShader.setFloat("pointLights[" + number + "].quadratic", 0.017f);
 		}
 
         ourShader.setVec3("spotLight.position", camera.Position);
