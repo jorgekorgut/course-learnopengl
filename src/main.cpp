@@ -27,48 +27,48 @@ float deltaTime = 0.0f;	// Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
 
 float cubeVertices[] = {
-    // positions          // texture Coords
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+    // Back face
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // Bottom-left
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
+     0.5f, -0.5f, -0.5f,  1.0f, 0.0f, // bottom-right         
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // bottom-left
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
+    // Front face
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-right
+     0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // top-right
+     0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // top-right
+    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, // top-left
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
+    // Left face
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-right
+    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-left
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-left
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-left
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-right
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-right
+    // Right face
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
+     0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right         
+     0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
+     0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left     
+     // Bottom face
+     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // top-right
+      0.5f, -0.5f, -0.5f,  1.0f, 1.0f, // top-left
+      0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-left
+      0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-left
+     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-right
+     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // top-right
+     // Top face
+     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
+      0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // bottom-right
+      0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right     
+      0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // bottom-right
+     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
+     -0.5f,  0.5f,  0.5f,  0.0f, 0.0f  // bottom-left        
 };
 
 float planeVertices[] = {
@@ -161,10 +161,9 @@ int main()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
-
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CW);
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
@@ -214,7 +213,7 @@ int main()
     windows.push_back(glm::vec3(0.0f, 0.0f, 0.7f));
     windows.push_back(glm::vec3(-0.3f, 0.0f, -2.3f));
     windows.push_back(glm::vec3(0.5f, 0.0f, -0.6f));
-	unsigned int grassTexture = TextureUtils::loadTexture("blending_transparent_window.png", "resources");
+	unsigned int grassTexture = TextureUtils::loadTexture("texture-debug.png", "resources");
 
     std::map<float, glm::vec3> sorted;
     for (unsigned int i = 0; i < windows.size(); i++)
@@ -249,26 +248,13 @@ int main()
         shader.setMat4("projection", projection);
         shader.setMat4("view", view);
 
-        // floor
-        glBindVertexArray(planeVAO);
-        glBindTexture(GL_TEXTURE_2D, floorTexture);
-        shader.setMat4("model", glm::mat4(1.0f));
-        normalMatrix = glm::transpose(glm::inverse(model)); // Update normal matrix only in case of non-uniform scaling
-        shader.setMat3("normalMatrix", normalMatrix);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
-
 
         glBindVertexArray(vegetationVAO);
         glBindTexture(GL_TEXTURE_2D, grassTexture);
+        model = glm::mat4(1.0f);
+        shader.setMat4("model", model);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
-        for (std::map<float, glm::vec3>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); ++it)
-        {
-            model = glm::mat4(1.0f);
-            model = glm::translate(model, it->second);
-            shader.setMat4("model", model);
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-        }
         
         glBindVertexArray(0);
         glEnable(GL_DEPTH_TEST);
