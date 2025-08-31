@@ -9,6 +9,6 @@ float near = 0.1;
 float far  = 100.0; 
 
 void main()
-{    
+{             
     FragColor = texture(texture1, TexCoords);
-}
+}  
