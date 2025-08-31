@@ -167,6 +167,7 @@
     <None Include="shaders\light_cube.vert" />
     <None Include="shaders\shader.frag" />
     <None Include="shaders\shader.vert" />
+    <None Include="shaders\shaderSingleColor.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resources\backpack\source_attribution.txt" />

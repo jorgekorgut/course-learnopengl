@@ -114,6 +114,7 @@
     <None Include="resources\backpack\backpack.mtl">
       <Filter>Resource Files\backpack</Filter>
     </None>
+    <None Include="shaders\shaderSingleColor.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resources\backpack\source_attribution.txt">
