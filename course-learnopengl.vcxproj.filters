@@ -115,6 +115,10 @@
       <Filter>Resource Files\backpack</Filter>
     </None>
     <None Include="shaders\shaderSingleColor.frag" />
+    <None Include="shaders\screen_shader.frag" />
+    <None Include="shaders\screen_shader.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resources\backpack\source_attribution.txt">
