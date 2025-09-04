@@ -119,6 +119,12 @@
     <None Include="shaders\screen_shader.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="shaders\skybox.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\skybox.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resources\backpack\source_attribution.txt">
